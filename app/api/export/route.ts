@@ -1,0 +1,60 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getAssetType } from "@/config/asset-types";
+import { renderToPdf, renderToPng, saveHtmlExport } from "@/lib/export";
+import { buildFileName } from "@/lib/filename";
+
+export const runtime = "nodejs";
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { assetTypeId, html, titulo } = body as {
+    assetTypeId?: string;
+    html?: string;
+    titulo?: string;
+  };
+
+  if (!assetTypeId || !html) {
+    return NextResponse.json({ error: "Faltan assetTypeId o html" }, { status: 400 });
+  }
+
+  const assetType = getAssetType(assetTypeId);
+  if (!assetType) {
+    return NextResponse.json({ error: `Tipo de asset desconocido: ${assetTypeId}` }, { status: 400 });
+  }
+
+  const extension = assetType.formatoExport;
+  const fileName = buildFileName({
+    categoriaId: assetType.categoriaId,
+    assetTypeId: assetType.id,
+    titulo: titulo || "sin-titulo",
+    extension,
+  });
+
+  try {
+    let buffer: Buffer;
+    let contentType: string;
+
+    if (assetType.formatoExport === "png") {
+      buffer = await renderToPng(html, assetType, fileName);
+      contentType = "image/png";
+    } else if (assetType.formatoExport === "pdf") {
+      buffer = await renderToPdf(html, assetType, fileName);
+      contentType = "application/pdf";
+    } else {
+      buffer = await saveHtmlExport(html, fileName);
+      contentType = "text/html";
+    }
+
+    return new NextResponse(new Uint8Array(buffer), {
+      status: 200,
+      headers: {
+        "Content-Type": contentType,
+        "Content-Disposition": `attachment; filename="${fileName}"`,
+      },
+    });
+  } catch (err) {
+    console.error("Error exportando asset:", err);
+    const message = err instanceof Error ? err.message : "Error desconocido";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}

@@ -1,0 +1,65 @@
+/*
+  Design system — CocoSandía Lingerie
+  Sincronizado desde el proyecto real de Claude Design ("Cocosandia Design
+  System", claude.ai/design/p/b7d0c420-7cba-4c9e-82be-51946d889f4e).
+  Única fuente de verdad visual: toda pieza generada debe restringirse a
+  estas variables. No usar colores/tipografías fuera de esta lista.
+  Si se edita la marca en Claude Design, volver a sincronizar este archivo.
+*/
+
+:root {
+  /* Escalas de color */
+  --pink-50:#fff1f6;--pink-100:#ffe0ec;--pink-200:#ffb8d4;--pink-300:#ff8bb9;--pink-400:#f6699e;--pink-500:#f24987;--pink-600:#d92e6d;--pink-700:#b21f57;--pink-800:#87173f;--pink-900:#5c0f2b;
+  --magenta-50:#fdeeff;--magenta-100:#f9cdff;--magenta-200:#f199ff;--magenta-300:#e75dff;--magenta-400:#dd28f5;--magenta-500:#d504d9;--magenta-600:#af03b3;--magenta-700:#87028a;--magenta-800:#5f0261;--magenta-900:#3d013e;
+  --green-50:#f1fbef;--green-100:#dcf5d6;--green-200:#b3e9a8;--green-300:#8ddc7d;--green-400:#77ce65;--green-500:#62bf54;--green-600:#4a9d3e;--green-700:#397b30;--green-800:#2a5c23;--green-900:#1c3e17;
+  --brown-50:#f8f0e9;--brown-100:#ecd6c0;--brown-200:#d8ae8e;--brown-300:#bd8560;--brown-400:#a56a3f;--brown-500:#8c4c27;--brown-600:#743e1f;--brown-700:#5c3119;--brown-800:#432312;--brown-900:#2c170b;
+  --ink-0:#ffffff;--ink-50:#fdf7f9;--ink-100:#f7eaf0;--ink-200:#e6d3dd;--ink-300:#c7abbb;--ink-400:#93748a;--ink-500:#5f4655;--ink-600:#3c2933;--ink-700:#241621;--ink-800:#140c15;--ink-900:#080a0d;
+
+  /* Semánticos */
+  --surface-page: var(--pink-50);
+  --surface-card: var(--ink-0);
+  --surface-inverse: var(--ink-900);
+  --surface-sunken: var(--ink-100);
+  --text-primary: var(--ink-900);
+  --text-secondary: var(--ink-500);
+  --text-muted: var(--ink-400);
+  --text-inverse: var(--ink-0);
+  --text-on-brand: var(--ink-0);
+  --brand-primary: var(--pink-500);
+  --brand-primary-hover: var(--pink-600);
+  --brand-primary-active: var(--pink-700);
+  --brand-accent: var(--magenta-500);
+  --brand-accent-hover: var(--magenta-600);
+  --brand-fresh: var(--green-500);
+  --brand-fresh-hover: var(--green-600);
+  --brand-earth: var(--brown-500);
+  --border-subtle: var(--ink-200);
+  --border-strong: var(--ink-400);
+  --focus-ring: var(--magenta-400);
+  --gradient-tropical: linear-gradient(135deg, var(--magenta-500) 0%, var(--pink-500) 50%, #ffb020 100%);
+
+  /* Tipografía de marca — familia Perpetua (Monotype), provista por la marca */
+  --font-display: "Perpetua Titling MT", var(--font-perpetua-titling), Georgia, "Times New Roman", serif; /* wordmark/titulares — SIEMPRE mayúsculas, una sola línea, nunca chico */
+  --font-sans: "Perpetua", var(--font-perpetua), Georgia, "Times New Roman", serif; /* headings/UI/body */
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* Espaciado (escala real de 4px) */
+  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;--space-24:96px;--space-32:128px;
+
+  /* Bordes / radios */
+  --radius-sm:6px;--radius-md:12px;--radius-lg:20px;--radius-xl:28px;--radius-pill:999px;--radius-none:0px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 3px rgba(8,10,13,0.08);
+  --shadow-md: 0 6px 20px rgba(8,10,13,0.10);
+  --shadow-lg: 0 16px 40px rgba(8,10,13,0.14);
+  --shadow-glow-pink: 0 8px 24px rgba(242,73,135,0.35);
+
+  --container-max: 1200px;
+}
