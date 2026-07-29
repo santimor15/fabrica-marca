@@ -53,8 +53,11 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err) {
+    // Detalle completo solo en los logs del servidor, nunca en la respuesta al cliente.
     console.error("Error exportando asset:", err);
-    const message = err instanceof Error ? err.message : "Error desconocido";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: "No se pudo exportar el archivo. Probá de nuevo en un momento." },
+      { status: 500 }
+    );
   }
 }

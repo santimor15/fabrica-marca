@@ -4,6 +4,9 @@ import path from "node:path";
 import type { AssetType } from "@/config/asset-types";
 import { buildFontFaceCss, injectFontFaces } from "@/lib/fonts";
 
+/** Errores con mensaje seguro para mostrarle directo al usuario (no filtran datos internos). */
+export class SafeGenerationError extends Error {}
+
 const TEMPLATES_DIR = path.join(process.cwd(), "templates");
 const TOKENS_PATH = path.join(process.cwd(), "design-system", "tokens.css");
 const IMAGE_PLACEHOLDER = "{{IMAGEN_SRC}}";
@@ -156,7 +159,7 @@ ${rules}`;
   });
 
   if (response.stop_reason === "max_tokens") {
-    throw new Error(
+    throw new SafeGenerationError(
       "Claude cortó la respuesta por límite de longitud antes de terminar el HTML. Probá de nuevo (a veces genera una versión más compacta)."
     );
   }
@@ -165,7 +168,7 @@ ${rules}`;
   let html = extractHtml(textBlock && textBlock.type === "text" ? textBlock.text : "");
 
   if (!html.includes("</html>")) {
-    throw new Error("La respuesta de Claude no incluyó un documento HTML completo. Probá generar de nuevo.");
+    throw new SafeGenerationError("La respuesta de Claude no incluyó un documento HTML completo. Probá generar de nuevo.");
   }
 
   if (!existingTemplate) {

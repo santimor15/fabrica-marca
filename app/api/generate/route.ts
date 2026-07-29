@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAssetType } from "@/config/asset-types";
-import { generateAsset } from "@/lib/claude";
+import { generateAsset, SafeGenerationError } from "@/lib/claude";
 
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
@@ -36,8 +36,11 @@ export async function POST(req: NextRequest) {
     const result = await generateAsset(assetType, contenido, imagenDataUrl);
     return NextResponse.json(result);
   } catch (err) {
+    // El detalle completo (puede incluir texto interno del SDK/headers) solo va a los logs
+    // del servidor — nunca al cliente, para no filtrar información sensible en pantalla.
     console.error("Error generando asset:", err);
-    const message = err instanceof Error ? err.message : "Error desconocido";
-    return NextResponse.json({ error: message }, { status: 500 });
+    const safeMessage =
+      err instanceof SafeGenerationError ? err.message : "No se pudo generar la pieza. Probá de nuevo en un momento.";
+    return NextResponse.json({ error: safeMessage }, { status: 500 });
   }
 }
