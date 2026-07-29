@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: var(--color-cream);
-  --foreground: var(--color-ink);
+  --background: var(--pink-50);
+  --foreground: var(--ink-900);
 }
 
 @theme inline {

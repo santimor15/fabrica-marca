@@ -5,7 +5,7 @@ export default function HomePage() {
   return (
     <main className="flex-1 flex flex-col items-center px-6 py-16 gap-12">
       <header className="text-center max-w-2xl">
-        <p className="text-sm font-semibold tracking-wide uppercase" style={{ color: "var(--color-pink)" }}>
+        <p className="text-sm font-semibold tracking-wide uppercase" style={{ color: "var(--brand-primary)" }}>
           CocoSandía Lingerie
         </p>
         <h1 className="text-4xl font-extrabold mt-2">Fábrica de Assets de Marca</h1>
@@ -16,8 +16,8 @@ export default function HomePage() {
           <Link
             key={cat.id}
             href={`/categoria/${cat.id}`}
-            className="rounded-2xl p-8 flex flex-col gap-2 text-white shadow-[var(--shadow-card)] transition hover:-translate-y-1"
-            style={{ background: "var(--gradient-brand)" }}
+            className="rounded-2xl p-8 flex flex-col gap-2 text-white shadow-[var(--shadow-lg)] transition hover:-translate-y-1"
+            style={{ background: "var(--gradient-tropical)" }}
           >
             <span className="text-2xl font-bold">{cat.nombre}</span>
           </Link>

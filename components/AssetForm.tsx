@@ -47,7 +47,7 @@ export function AssetForm({ campos, values, onChange, imagenDataUrl, onImagenCha
           <div key={campo.id} className="flex flex-col gap-2">
             <label htmlFor={campo.id} className="text-sm font-semibold">
               {campo.label}
-              {campo.required && <span style={{ color: "var(--color-pink)" }}> *</span>}
+              {campo.required && <span style={{ color: "var(--pink-500)" }}> *</span>}
             </label>
             {campo.type === "textarea" || campo.type === "bullets" ? (
               <textarea
@@ -57,7 +57,7 @@ export function AssetForm({ campos, values, onChange, imagenDataUrl, onImagenCha
                 placeholder={campo.placeholder}
                 required={campo.required}
                 rows={campo.type === "bullets" ? 4 : 5}
-                className="w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-pink)]"
+                className="w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--pink-500)]"
               />
             ) : campo.type === "number" ? (
               <input
@@ -67,7 +67,7 @@ export function AssetForm({ campos, values, onChange, imagenDataUrl, onImagenCha
                 max={campo.max}
                 value={values[campo.id] ?? ""}
                 onChange={(e) => onChange(campo.id, e.target.value)}
-                className="w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-pink)]"
+                className="w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--pink-500)]"
               />
             ) : (
               <input
@@ -77,7 +77,7 @@ export function AssetForm({ campos, values, onChange, imagenDataUrl, onImagenCha
                 onChange={(e) => onChange(campo.id, e.target.value)}
                 placeholder={campo.placeholder}
                 required={campo.required}
-                className="w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-pink)]"
+                className="w-full rounded-xl border border-black/10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--pink-500)]"
               />
             )}
             {campo.helpText && <p className="text-xs opacity-50">{campo.helpText}</p>}

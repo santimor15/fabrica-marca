@@ -82,7 +82,7 @@ export function GeneratorClient({ assetType }: Props) {
           onImagenChange={setImagenDataUrl}
         />
         {error && (
-          <p className="text-sm font-medium" style={{ color: "var(--color-pink)" }}>
+          <p className="text-sm font-medium" style={{ color: "var(--pink-500)" }}>
             {error}
           </p>
         )}
@@ -90,7 +90,7 @@ export function GeneratorClient({ assetType }: Props) {
           onClick={handleGenerate}
           disabled={loading}
           className="rounded-full px-6 py-3 font-semibold text-white disabled:opacity-50 transition"
-          style={{ background: "var(--gradient-brand)" }}
+          style={{ background: "var(--gradient-tropical)" }}
         >
           {loading ? "Generando…" : html ? "Regenerar vista previa" : "Generar vista previa"}
         </button>
@@ -109,7 +109,7 @@ export function GeneratorClient({ assetType }: Props) {
           onClick={handleDownload}
           disabled={!html || exporting}
           className="rounded-full px-6 py-3 font-semibold border-2 disabled:opacity-40 transition"
-          style={{ borderColor: "var(--color-ink)", color: "var(--color-ink)" }}
+          style={{ borderColor: "var(--ink-900)", color: "var(--ink-900)" }}
         >
           {exporting ? "Exportando…" : `Descargar ${assetType.formatoExport.toUpperCase()}`}
         </button>

@@ -25,9 +25,9 @@ export default async function CategoriaPage({
           <Link
             key={tipo.id}
             href={`/generar/${tipo.id}`}
-            className="rounded-2xl p-6 flex flex-col gap-1 bg-white shadow-[var(--shadow-card)] border border-black/5 hover:-translate-y-1 transition"
+            className="rounded-2xl p-6 flex flex-col gap-1 bg-white shadow-[var(--shadow-sm)] border border-black/5 hover:-translate-y-1 hover:shadow-[var(--shadow-md)] transition"
           >
-            <span className="text-lg font-bold" style={{ color: "var(--color-ink)" }}>
+            <span className="text-lg font-bold" style={{ color: "var(--ink-900)" }}>
               {tipo.nombre}
             </span>
             <span className="text-sm opacity-60">{tipo.descripcion}</span>
