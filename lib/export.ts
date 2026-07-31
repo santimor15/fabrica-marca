@@ -1,34 +1,50 @@
-import puppeteer from "puppeteer";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
+import type { Browser, Page } from "puppeteer-core";
 import type { AssetType } from "@/config/asset-types";
 
 const OUTPUT_DIR = path.join(process.cwd(), "output");
+const IS_SERVERLESS = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
 
 async function saveCopy(fileName: string, data: Buffer | string): Promise<void> {
+  if (IS_SERVERLESS) return; // filesystem de solo lectura salvo /tmp; no hace falta persistir ahí
   await fs.mkdir(OUTPUT_DIR, { recursive: true });
   await fs.writeFile(path.join(OUTPUT_DIR, fileName), data);
 }
 
-async function waitForFonts(page: import("puppeteer").Page): Promise<void> {
+async function waitForFonts(page: Page): Promise<void> {
   await page.evaluate(async () => {
     await document.fonts.ready;
   });
 }
 
-async function launchBrowser() {
+async function launchBrowser(): Promise<Browser> {
+  if (IS_SERVERLESS) {
+    // Vercel/Lambda: puppeteer con Chromium completo no entra en el límite de tamaño
+    // de la función ni trae las librerías del sistema que necesita headless Chrome.
+    // @sparticuz/chromium provee un binario armado para este entorno.
+    const chromium = (await import("@sparticuz/chromium")).default;
+    const puppeteerCore = await import("puppeteer-core");
+    return puppeteerCore.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: true,
+    });
+  }
+
+  // Local: puppeteer con su Chromium propio.
+  const puppeteer = (await import("puppeteer")).default;
   // userDataDir único por lanzamiento: evita colisiones "browser already running"
   // cuando dos exportaciones caen cerca en el tiempo.
   const userDataDir = path.join(os.tmpdir(), `fabrica-assets-puppeteer-${randomUUID()}`);
-  // pipe:true — este entorno bloquea la conexión WebSocket que Puppeteer usa por
-  // default para hablar con Chrome (DevTools Protocol); el transporte por pipe
-  // (file descriptors heredados) sí funciona.
-  return puppeteer.launch({ headless: true, userDataDir, pipe: true });
+  // pipe:true — algunos entornos de desarrollo sandboxeados bloquean el WebSocket que
+  // Puppeteer usa por default para hablar con Chrome; el transporte por pipe sí funciona.
+  return puppeteer.launch({ headless: true, userDataDir, pipe: true }) as unknown as Browser;
 }
 
-async function closeBrowserSafely(browser: Awaited<ReturnType<typeof puppeteer.launch>>): Promise<void> {
+async function closeBrowserSafely(browser: Browser): Promise<void> {
   try {
     await browser.close();
   } catch (err) {

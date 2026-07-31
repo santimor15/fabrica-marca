@@ -4,6 +4,8 @@ import { renderToPdf, renderToPng, saveHtmlExport } from "@/lib/export";
 import { buildFileName } from "@/lib/filename";
 
 export const runtime = "nodejs";
+// Lanzar Chromium y renderizar puede tardar más que el default de 10s en Vercel.
+export const maxDuration = 60;
 
 export async function POST(req: NextRequest) {
   const body = await req.json();

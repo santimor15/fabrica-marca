@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAssetType } from "@/config/asset-types";
 import { generateAsset, SafeGenerationError } from "@/lib/claude";
 
+// La llamada a Claude puede tardar bastante más que el default de 10s en Vercel.
+export const maxDuration = 60;
+
 export async function POST(req: NextRequest) {
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
