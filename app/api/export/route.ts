@@ -57,8 +57,13 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     // Detalle completo solo en los logs del servidor, nunca en la respuesta al cliente.
     console.error("Error exportando asset:", err);
+    // TEMPORAL: este endpoint no maneja secretos (no toca la API key), así que por ahora
+    // devolvemos un resumen sanitizado del error para diagnosticar el fallo en Vercel.
+    // Sacar esto en cuanto quede resuelto.
+    const debugInfo =
+      err instanceof Error ? `${err.name}: ${err.message}`.slice(0, 500) : String(err).slice(0, 500);
     return NextResponse.json(
-      { error: "No se pudo exportar el archivo. Probá de nuevo en un momento." },
+      { error: "No se pudo exportar el archivo. Probá de nuevo en un momento.", debug: debugInfo },
       { status: 500 }
     );
   }
