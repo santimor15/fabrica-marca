@@ -50,9 +50,7 @@ export function GeneratorClient({ assetType }: Props) {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        // TEMPORAL: muestra data.debug (resumen sanitizado del error) mientras se
-        // diagnostica el fallo de exportación en Vercel. Sacar junto con el campo debug.
-        throw new Error(data.debug || data.error || "Error exportando la pieza");
+        throw new Error(data.error || "Error exportando la pieza");
       }
       const blob = await res.blob();
       const disposition = res.headers.get("Content-Disposition") || "";
