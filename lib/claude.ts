@@ -96,7 +96,13 @@ ${tokens}
 - Nunca generes markdown, texto plano ni un layout genérico de documento — es una pieza de marca real, con jerarquía visual clara, uso de color de marca, tipografía y composición profesional (no un bloque de texto centrado sin más).
 - ${
     tienesImagen
-      ? `Se proporcionó una imagen para esta pieza. Incluila con exactamente <img src="${IMAGE_PLACEHOLDER}" style="..."> (usá literalmente ese texto como src, NO generes ni inventes datos base64) y posicionala con object-fit/recorte prolijo según el layout.`
+      ? `Se proporcionó una foto real de producto para esta pieza (te la adjunto para que veas de qué se trata). Reglas para usarla bien:
+  - Incluila con exactamente <img src="${IMAGE_PLACEHOLDER}" style="..."> (usá literalmente ese texto como src, NO generes ni inventes datos base64).
+  - El contenedor de la imagen (o la imagen misma) debe tener ancho y alto explícitos en px — nunca "auto" en ambos ejes, o el recorte sale mal.
+  - Siempre object-fit: cover (nunca contain ni stretch) para que llene el espacio sin deformarse; object-position: center salvo que la foto sugiera claramente que conviene otro encuadre.
+  - Priorizá que la foto sea protagonista: usala a página/sección completa (full-bleed) cuando el layout lo permita, en vez de encajonarla en una tarjeta chica con margen alrededor.
+  - Si va texto encima de la foto, agregá un scrim (degradado a negro ~30-50% de opacidad) detrás del texto para que se lea bien — nunca texto directo sobre foto sin contraste.
+  - No agregues bordes duros ni marcos alrededor de la foto; el radio de esquina (si aplica) debe ser el mismo que usa el resto de la pieza.`
       : `No hay imagen para esta pieza. Resolvé el diseño solo con color, tipografía y formas — no dejes espacios vacíos ni placeholders de imagen rotos.`
   }
 - Marcá las zonas de contenido editable con atributos data-slot (ej. data-slot="titulo", data-slot="texto", data-slot="datosClave") para que la plantilla se pueda reutilizar después con otro contenido.
