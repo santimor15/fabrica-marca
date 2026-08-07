@@ -39,6 +39,9 @@ yarn-error.log*
 # assets generados por la app (no son código fuente)
 /output/*
 !/output/.gitkeep
+# salvavidas: exports que a veces quedan sueltos en la raíz en vez de /output
+/*.png
+/*.pdf
 
 # typescript
 *.tsbuildinfo
